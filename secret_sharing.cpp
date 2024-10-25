@@ -1,12 +1,12 @@
 #include <iostream>
 #include <fstream>
-#include <json/json.h> // Ensure you have the JsonCpp library installed
+#include <json/json.h> 
 #include <vector>
 #include <cmath>
 
 using namespace std;
 
-// Function to convert a string in a given base to an integer
+
 long long decodeValue(const string &value, int base) {
     long long result = 0;
     for (char ch : value) {
@@ -19,7 +19,7 @@ long long decodeValue(const string &value, int base) {
     return result;
 }
 
-// Function to read JSON data and parse it into (x, y) pairs
+
 vector<pair<int, long long>> parseInputData(const string &filename) {
     ifstream file(filename);
     Json::Value data;
@@ -39,14 +39,14 @@ vector<pair<int, long long>> parseInputData(const string &filename) {
     return points;
 }
 
-// Function to calculate Lagrange interpolation at x=0 to get the constant term
+
 long long calculateConstantTerm(const vector<pair<int, long long>> &points, int k) {
     long long constantTerm = 0;
     for (int i = 0; i < k; ++i) {
         long long x_i = points[i].first;
         long long y_i = points[i].second;
         
-        // Calculate Lagrange basis polynomial L_i(0)
+        
         long long L_i = 1;
         for (int j = 0; j < k; ++j) {
             if (i != j) {
@@ -56,26 +56,26 @@ long long calculateConstantTerm(const vector<pair<int, long long>> &points, int 
             }
         }
         
-        // Add to the constant term using Lagrange interpolation formula
+        
         constantTerm += y_i * L_i;
     }
     return constantTerm;
 }
 
 int main() {
-    // Parse input data from the JSON files
+    
     vector<pair<int, long long>> points1 = parseInputData("testcase1.json");
     vector<pair<int, long long>> points2 = parseInputData("testcase2.json");
 
-    // Get k values from JSON data
-    int k1 = 3; // k from first JSON, modify this to dynamic if multiple files provided
-    int k2 = 7; // k from second JSON, modify as above
+    
+    int k1 = 3; 
+    int k2 = 7; 
 
-    // Calculate the constant term (secret) for each test case
+    
     long long constantTerm1 = calculateConstantTerm(points1, k1);
     long long constantTerm2 = calculateConstantTerm(points2, k2);
 
-    // Output the results
+    
     cout << "Secret for Test Case 1: " << constantTerm1 << endl;
     cout << "Secret for Test Case 2: " << constantTerm2 << endl;
 
